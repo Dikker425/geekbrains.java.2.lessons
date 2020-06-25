@@ -7,9 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import javax.crypto.spec.PSource;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class Controller {
+
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+
 
     @FXML
     TextArea textOutput;
@@ -27,10 +32,11 @@ public class Controller {
 
     // отправка соробщения через Enter или кнопку
     public void sendMessage(ActionEvent actionEvent) {
-        if(textInput.getText().trim().isEmpty()){
+        LocalDateTime now = LocalDateTime.now();
+        if (textInput.getText().trim().isEmpty()) {
             textInput.setPromptText("Нельзя отправить пустое сообщение");
         } else {
-            textOutput.appendText(textInput.getText() + "\n");
+            textOutput.appendText(dtf.format(now) + " : " + textInput.getText() + "\n");
             textInput.clear();
             textInput.setPromptText("Введите сообщение. . .");
         }
